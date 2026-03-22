@@ -37,7 +37,7 @@ Open the project in VS Code and press **F5** to launch the Extension Development
 
 ### VS Code Marketplace
 
-> Coming soon — [marketplace link placeholder]
+[Install from VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Anshuman-Gaur.pm-copilot)
 
 ## Configuration
 
