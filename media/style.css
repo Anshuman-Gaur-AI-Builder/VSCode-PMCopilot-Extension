@@ -1,0 +1,116 @@
+body {
+	font-family: var(--vscode-font-family);
+	font-size: var(--vscode-font-size);
+	color: var(--vscode-foreground);
+	background-color: transparent;
+	padding: 0 12px 12px;
+	margin: 0;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+label {
+	display: block;
+	margin-top: 10px;
+	margin-bottom: 2px;
+	font-weight: 600;
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--vscode-foreground);
+	opacity: 0.8;
+}
+
+textarea {
+	width: 100%;
+	box-sizing: border-box;
+	background: var(--vscode-input-background);
+	color: var(--vscode-input-foreground);
+	border: 1px solid var(--vscode-input-border, transparent);
+	border-radius: 2px;
+	padding: 6px 8px;
+	font-family: var(--vscode-font-family);
+	font-size: var(--vscode-font-size);
+	resize: vertical;
+	min-height: 80px;
+}
+
+textarea:focus,
+select:focus {
+	outline: 1px solid var(--vscode-focusBorder);
+	outline-offset: -1px;
+}
+
+select {
+	width: 100%;
+	box-sizing: border-box;
+	background: var(--vscode-input-background);
+	color: var(--vscode-input-foreground);
+	border: 1px solid var(--vscode-input-border, transparent);
+	border-radius: 2px;
+	padding: 4px 8px;
+	font-family: var(--vscode-font-family);
+	font-size: var(--vscode-font-size);
+}
+
+button {
+	width: 100%;
+	padding: 6px 14px;
+	margin-top: 8px;
+	background: var(--vscode-button-background);
+	color: var(--vscode-button-foreground);
+	border: none;
+	border-radius: 2px;
+	cursor: pointer;
+	font-family: var(--vscode-font-family);
+	font-size: var(--vscode-font-size);
+	font-weight: 600;
+}
+
+button:hover {
+	background: var(--vscode-button-hoverBackground);
+}
+
+button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.output {
+	margin-top: 12px;
+	padding: 10px;
+	background: var(--vscode-editor-background);
+	border: 1px solid var(--vscode-panel-border, transparent);
+	border-radius: 2px;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	font-size: var(--vscode-editor-font-size, 13px);
+	line-height: 1.5;
+	max-height: 60vh;
+	overflow-y: auto;
+}
+
+.output.error {
+	color: var(--vscode-errorForeground);
+}
+
+.spinner {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	border: 2px solid var(--vscode-foreground);
+	border-top-color: transparent;
+	border-radius: 50%;
+	animation: spin 0.8s linear infinite;
+	vertical-align: middle;
+	margin-right: 6px;
+	opacity: 0.7;
+}
+
+@keyframes spin {
+	to { transform: rotate(360deg); }
+}
