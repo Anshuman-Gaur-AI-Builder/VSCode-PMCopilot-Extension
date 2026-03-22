@@ -1,0 +1,73 @@
+{
+  "name": "pm-copilot",
+  "displayName": "PM Copilot",
+  "description": "AI powered PRD generator for product managers within VSCode",
+  "version": "0.1.1",
+  "publisher": "Anshuman-Gaur",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Anshuman-Gaur-AI-Builder/VSCode-PMCopilot-Extension.git"
+  },
+  "icon": "images/icon.png",
+  "engines": {
+    "vscode": "^1.110.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "pm-copilot-sidebar",
+          "title": "PM Copilot",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "pm-copilot-sidebar": [
+        {
+          "type": "webview",
+          "id": "pmCopilot.sidebarView",
+          "name": "PM Copilot"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "PM Copilot",
+      "properties": {
+        "pmCopilot.anthropicApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Your Anthropic API key for Claude.",
+          "scope": "application"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.110.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "typescript-eslint": "^8.56.1",
+    "eslint": "^9.39.3",
+    "typescript": "^5.9.3",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
