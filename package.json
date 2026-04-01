@@ -2,7 +2,7 @@
   "name": "pm-copilot",
   "displayName": "PM Copilot",
   "description": "AI powered PRD generator for product managers within VSCode",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "publisher": "Anshuman-Gaur",
   "license": "MIT",
   "repository": {
