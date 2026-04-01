@@ -2,7 +2,7 @@
   "name": "pm-copilot",
   "displayName": "PM Copilot",
   "description": "AI powered PRD generator for product managers within VSCode",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "Anshuman-Gaur",
   "license": "MIT",
   "repository": {
@@ -40,10 +40,32 @@
     "configuration": {
       "title": "PM Copilot",
       "properties": {
+        "pmCopilot.aiProvider": {
+          "type": "string",
+          "default": "copilot",
+          "enum": [
+            "copilot",
+            "anthropic",
+            "openai"
+          ],
+          "enumDescriptions": [
+            "Use VS Code's built-in GitHub Copilot (no API key needed)",
+            "Use Anthropic Claude API (requires API key)",
+            "Use OpenAI API (requires API key)"
+          ],
+          "description": "Which AI provider to use for generation.",
+          "scope": "application"
+        },
         "pmCopilot.anthropicApiKey": {
           "type": "string",
           "default": "",
-          "description": "Your Anthropic API key for Claude.",
+          "description": "Your Anthropic API key for Claude (required when provider is 'anthropic').",
+          "scope": "application"
+        },
+        "pmCopilot.openaiApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Your OpenAI API key (required when provider is 'openai').",
           "scope": "application"
         }
       }
@@ -58,7 +80,8 @@
     "test": "vscode-test"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0"
+    "@anthropic-ai/sdk": "^0.39.0",
+    "openai": "^4.73.0"
   },
   "devDependencies": {
     "@types/vscode": "^1.110.0",
