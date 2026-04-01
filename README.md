@@ -8,21 +8,35 @@
 
 Product Managers spend hours translating raw feature requests, customer feedback, and stakeholder asks into structured PRDs, user stories, and risk assessments. It's repetitive, high-effort work that delays the actual product thinking.
 
-PM Copilot eliminates that friction. Paste a feature request, select an output type, click Generate — and get a structured, actionable document in seconds. No context-switching to a browser. No copy-pasting into ChatGPT. It lives where your engineering team already works: inside VS Code.
+PM Copilot eliminates that friction. Paste a feature request, select your deliverables, click Generate — and get structured, actionable documents in seconds. No context-switching to a browser. No copy-pasting into ChatGPT. It lives where your engineering team already works: inside VS Code.
 
 ## Capabilities
 
-| Output Type | What You Get |
+| Deliverable | What You Get |
 |---|---|
-| **PRD Outline** | Problem Statement, User Stories, Acceptance Criteria, Out of Scope, Risks & Open Questions |
+| **Product Brief** | Problem Statement, Goals & Objectives, Scope, Out of Scope, Success Metrics |
 | **User Stories** | Persona-driven stories in As a / I want / So that format, grouped by epic, with acceptance criteria |
 | **Risk Analysis** | Technical Risks, Business Risks, Mitigation Strategies — rated by impact and likelihood |
+
+Generate any combination of deliverables — select individual items or use **Select All** to produce a complete package in one click.
+
+## Key Features
+
+- **Multi-provider AI support** — choose between VS Code Copilot (no API key needed), Anthropic Claude, or OpenAI GPT-4o
+- **Clarifying questions** — the AI asks targeted follow-up questions before generating, so outputs are tailored to your context. Skip them anytime with "Surprise Me"
+- **Selective deliverables** — generate only what you need: Product Brief, User Stories, Risk Analysis, or all three
+- **Copy to clipboard** — one-click copy to paste into GitHub issues, Notion, Confluence, or anywhere else
+- **Theme-adaptive UI** — matches any VS Code theme automatically
 
 ## Screenshot
 
 ![PM Copilot in action](images/screenshot.png)
 
 ## Installation
+
+### VS Code Marketplace
+
+[Install from VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Anshuman-Gaur.pm-copilot)
 
 ### From Source (Development)
 
@@ -35,28 +49,31 @@ npm run compile
 
 Open the project in VS Code and press **F5** to launch the Extension Development Host.
 
-### VS Code Marketplace
-
-[Install from VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=Anshuman-Gaur.pm-copilot)
-
 ## Configuration
 
-PM Copilot requires an Anthropic API key to call Claude.
+### AI Provider
 
-1. Open VS Code Settings (`Cmd+,` on macOS / `Ctrl+,` on Windows)
-2. Search for `pmCopilot.anthropicApiKey`
-3. Paste your API key
+PM Copilot supports three AI providers. Set your preference in VS Code Settings:
 
-The key is stored securely in VS Code's settings infrastructure — not in `.env` files or source code.
+| Provider | Setting | API Key Required? |
+|---|---|---|
+| **VS Code Copilot** (default) | `pmCopilot.aiProvider` = `copilot` | No — uses GitHub Copilot if installed |
+| **Anthropic Claude** | `pmCopilot.aiProvider` = `anthropic` | Yes — set `pmCopilot.anthropicApiKey` |
+| **OpenAI GPT-4o** | `pmCopilot.aiProvider` = `openai` | Yes — set `pmCopilot.openaiApiKey` |
+
+You can also switch providers directly from the sidebar dropdown without opening Settings.
+
+API keys are stored securely in VS Code's settings infrastructure — not in `.env` files or source code.
 
 ## Usage
 
 1. Click the **PM Copilot** icon in the Activity Bar (left sidebar)
 2. Paste a feature request, customer feedback, or product idea into the text area
-3. Select the output type: **PRD Outline**, **User Stories**, or **Risk Analysis**
-4. Click **Generate**
-
-Results appear directly in the sidebar panel.
+3. Select your AI provider
+4. Check the deliverables you want: **Product Brief**, **User Stories**, **Risk Analysis**, or **Select All**
+5. Click **Generate**
+6. Answer the clarifying questions to improve output quality, or click **Skip — Surprise Me** to generate immediately
+7. Review the output and click **Copy** to paste it wherever you need it
 
 ## Example
 
@@ -69,7 +86,7 @@ have to ask HR or dig through old offer letters. Managers should see their direc
 reports' history too. This needs to integrate with our existing Workday payroll data.
 ```
 
-### Output (PRD Outline)
+### Output (Product Brief)
 
 ```
 ## Problem Statement
@@ -78,21 +95,16 @@ unnecessary HR ticket volume and reducing transparency. Managers cannot
 access direct report compensation data without manual HR intervention,
 slowing down planning cycles.
 
-## User Stories
-- As an employee, I want to view my complete compensation history in one
-  dashboard, so that I can track my growth without contacting HR.
-- As a manager, I want to see my direct reports' compensation history,
-  so that I can make informed promotion and retention decisions.
-- As an HR admin, I want compensation data to sync automatically from
-  Workday, so that records stay current without manual entry.
+## Goals & Objectives
+- Provide employees with a single dashboard showing complete compensation history
+- Reduce HR ticket volume for compensation inquiries by 80%
+- Enable managers to access direct report compensation data in real time
+- Automate data sync from Workday to eliminate manual record-keeping
 
-## Acceptance Criteria
-- Dashboard displays base salary, bonus, equity, and adjustments in
-  chronological order
-- Data refreshes from Workday on a nightly sync cycle
-- Managers see only their direct reports (org hierarchy scoped)
-- Employee view is read-only with export-to-PDF option
-- Role-based access control enforced at API and UI layers
+## Scope
+Self-service compensation dashboard displaying base salary, bonus, equity,
+and adjustments in chronological order. Nightly sync from Workday. Manager
+view scoped to org hierarchy. Read-only with export-to-PDF.
 
 ## Out of Scope
 - Compensation benchmarking or market data comparisons
@@ -100,11 +112,10 @@ slowing down planning cycles.
 - Tax or payroll calculation features
 - Non-Workday HRIS integrations
 
-## Risks & Open Questions
-- What is the Workday API rate limit, and can it support nightly bulk sync?
-- How far back does historical data need to go — full tenure or last N years?
-- Does displaying equity grant details require legal/compliance review?
-- Org hierarchy changes (reorgs) may create edge cases in manager visibility
+## Success Metrics
+- HR compensation inquiry tickets reduced by 80% within 90 days
+- 70% employee adoption within first quarter
+- Manager satisfaction score >= 4.0/5.0 in post-launch survey
 ```
 
 ## Tech Stack
@@ -113,25 +124,27 @@ slowing down planning cycles.
 |---|---|
 | Extension Runtime | TypeScript, VS Code Extension API |
 | UI | Webview with VS Code native CSS variables (adapts to any theme) |
-| AI Backend | Anthropic Claude (claude-sonnet-4-6) via `@anthropic-ai/sdk` |
+| AI Backend | VS Code Copilot (`vscode.lm` API), Anthropic Claude (`@anthropic-ai/sdk`), OpenAI GPT-4o (`openai`) |
 | Configuration | VS Code Settings API (secure, per-user) |
 
 ## Architecture
 
 ```
-┌──────────────────────────────────────────────┐
-│  VS Code                                     │
-│  ┌────────────┐    postMessage    ┌────────┐ │
-│  │  Webview    │ ◄──────────────► │Provider│ │
-│  │  (HTML/JS)  │                  │  (TS)  │ │
-│  └────────────┘                  └───┬────┘ │
-│                                      │       │
-└──────────────────────────────────────┼───────┘
-                                       │ HTTPS
-                              ┌────────▼────────┐
-                              │  Anthropic API   │
-                              │  claude-sonnet   │
-                              └─────────────────┘
+┌──────────────────────────────────────────────────┐
+│  VS Code                                         │
+│  ┌────────────┐    postMessage    ┌────────────┐ │
+│  │  Webview    │ ◄──────────────► │  Provider   │ │
+│  │  (HTML/JS)  │                  │    (TS)     │ │
+│  └────────────┘                  └─────┬──────┘ │
+│                                        │         │
+└────────────────────────────────────────┼─────────┘
+                                         │
+                    ┌────────────────────┼────────────────────┐
+                    │                    │                     │
+           ┌────────▼──────┐  ┌─────────▼───────┐  ┌─────────▼───────┐
+           │  VS Code LM   │  │  Anthropic API  │  │   OpenAI API    │
+           │  (Copilot)    │  │  claude-sonnet  │  │    gpt-4o       │
+           └───────────────┘  └─────────────────┘  └─────────────────┘
 ```
 
 ## Why This Exists
