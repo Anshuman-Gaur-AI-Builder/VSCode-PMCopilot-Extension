@@ -38,11 +38,20 @@ async function generateWithOpenAI(
 	return response.choices[0]?.message?.content ?? 'No output generated.';
 }
 
+function assertCopilotAvailable(): void {
+	if (!vscode.lm || typeof vscode.lm.selectChatModels !== 'function') {
+		throw new Error(
+			'VS Code Copilot requires VS Code 1.93 or later. Please update VS Code, or switch to the Anthropic or OpenAI provider.'
+		);
+	}
+}
+
 async function generateWithCopilot(
 	input: string,
 	outputType: OutputType,
 	token: vscode.CancellationToken
 ): Promise<string> {
+	assertCopilotAvailable();
 	const models = await vscode.lm.selectChatModels();
 	if (models.length === 0) {
 		throw new Error(
@@ -105,6 +114,7 @@ export async function askClarifyingQuestions(
 			break;
 		}
 		case 'copilot': {
+			assertCopilotAvailable();
 			const models = await vscode.lm.selectChatModels();
 			if (models.length === 0) {
 				throw new Error('No language models available. Make sure GitHub Copilot is installed and signed in.');
